@@ -1,0 +1,155 @@
+#!/bin/zsh
+#
+#(make sure the right shell will be used)
+#$ -S /bin/zsh
+#
+#(the cpu time for this job)
+#$ -l h_rt=15:30:00
+#
+#(the maximum memory usage of this job)
+#$ -l h_vmem=1500M
+#
+#(stderr and stdout are merged together to stdout)
+#$ -j y
+#
+#(send mail on job's end and abort)
+#$ -m a
+#     $ -l distro=sld5
+#$ -l distro=sld6
+#$ -o scratch/stdout/$JOB_NAME_$JOB_ID.out
+
+function char {
+        case $1 in
+            [1-9])  echo 000$1 ;;
+            [1-9][0-9])  echo 00$1 ;;
+            [1-9][0-9][0-9])  echo 0$1 ;;
+            [1-9][0-9][0-9][0-9])  echo $1 ;;
+        esac
+}
+###############################
+nfil=`char $nfile`
+echo " nfil " $nfil
+
+. /etc/profile.d/modules.sh
+module use -a /afs/desy.de/group/cms/modulefiles/
+module load cmssw/slc6_amd64_gcc493
+cd /afs/desy.de/user/h/hinzmann/CMSSW_7_6_5_patch1/src
+cmsenv
+
+cd /tmp/
+
+pwd=`pwd`
+echo $pwd
+
+export PYSEED=${pytseed}
+echo 'seed ' $PYSEED ${pytseed}
+name=$LS_JOBNAME
+
+#echo ' Tune Nr ' $tunenr $RDFNR
+#echo ' after set name' ${name} 
+#mkdir ${name}
+#cd ${name}
+
+
+ echo ' after ini ' 
+
+fs sysname 
+
+#LIBPDFPATH=/afs/desy.de/group/alliance/mcg/public/MCGenerators/lhapdf/5.8.5/amd64_rhel50/lib/
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBPDFPATH
+#export LD_LIBRARY_PATH=/afs/desy.de/group/alliance/mcg/public/HepMC/2.06.09/amd64_rhel50/lib:$LD_LIBRARY_PATH
+
+
+#export PATH=$PATH:$LIBPDFPATH
+
+#mkdir bin
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/pythia8205/examples/main31 bin/pythia
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-jets.cmnd bin/main31.cmnd
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-jets-CUETP8-herapdf.cmnd bin/main31.cmnd
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-jets-CUETP8-cteq6l.cmnd bin/main31.cmnd
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-jets-CUETP8-cteq6l-as1.cmnd bin/main31.cmnd
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-jets-CUETP8-cteq6l-as2.cmnd bin/main31.cmnd
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/runs/powheg-3jets-CUETP8-cteq6l.cmnd bin/main31.cmnd
+
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia6/bin/HERAPDF1.5LO_EIG.LHgrid .
+#ln -s HERAPDF1.5LO_EIG.LHgrid cteq61.LHgrid
+#cp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia8/bin/herapdf2.0-LO.LHgrid .
+#ln -s herapdf2.0-LO.LHgrid cteq61.LHgrid
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia6/bin/HERAPDF1.5LO_EIG.LHgrid . 
+
+#export LHAPATH=$PWD
+
+
+
+#scp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/myrivet-2/RivetMyTest.so .
+#scp -rp /afs/desy.de/user/j/jung/scratch-dust/cvs/myrivet-2/*yoda .
+#export RIVET_ANALYSIS_PATH=RIVET_ANALYSIS_PATH:$PWD
+#echo ' RIVET_REF_PATH = ' $RIVET_REF_PATH
+
+#cd $TMPDIR
+#ln -s  /afs/desy.de/user/j/jung/scratch-dust/cvs/pythia82/pythia8205/lib/libpythia8lhapdf5.so .
+#cd 
+
+#cd $TMPDIR/bin
+#scp /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Zj/powheg-Zj-bornktmin=2-herapdf15-pwgevents-$nfil.lhe .
+#ln -s powheg-Zj-bornktmin=2-herapdf15-pwgevents-$nfil.lhe pwgevents.lhe
+##scp /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Z/powheg-Z-ptsqmni=4-herapdf15-file$nfile.lhe .
+##ln -s powheg-Z-ptsqmni=4-herapdf15-file$nfile.lhe pwgevents.lhe
+####scp /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Z/powheg-Z-ptsqmni=4-ct10-file$nfile.lhe .
+####ln -s powheg-Z-ptsqmni=4-ct10-file$nfile.lhe pwgevents.lhe
+
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc7000-kt5-herapdf-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc7000-kt1-herapdf-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-trijet/powheg-trijet-bornktmin=1-herapdf-file$nfile.lhe pwgevents.lhe
+
+
+# ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc8000-kt50-herapdf-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc8000-kt100-bornsup1000-ct10-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#### dijet
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc8000-kt100-bornsup500-ct10-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-trijet/pwgevents-$nfil.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc8000-kt100-bornsup500-herapdf-pdfrwgt-file$nfile.lhe pwgevents.lhe
+# ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/powheg-V2-lhc13000-kt5-herapdf-pdfrwgt-file$nfile.lhe pwgevents.lhe
+#ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-trijet-lhefiles/lhefiles/pwgevents-$nfil.lhe    pwgevents.lhe
+#### trijet
+####ln -s /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-trijet/pwgevents-$nfil.lhe   pwgevents.lhe
+#ls -rtl 
+#echo ' after copy  ' 
+#ls -rtl
+#rm /tmp/pythia*
+echo ' before running rivet '
+outfile=/tmp/${name}${nfil}-pythia8-noisr.yoda
+echo ' output file = ' ${outfile}
+#export HEPMCOUT=${outfile}
+#mkfifo ${outfile}
+#echo ' after mkfifo '
+# ls -rtl /tmp
+#cd $TMPDIR/bin
+#ls -rtl
+
+cp /afs/desy.de/user/j/jung/scratch-dust/cvs/powheg/out-Dijet/${name}-file${nfil}.lhe.gz .
+echo gunzip ${name}-file${nfil}.lhe.gz
+gunzip ${name}-file${nfil}.lhe.gz
+echo cmsRun /afs/desy.de/user/h/hinzmann/CMSSW_7_6_5_patch1/src/shower_pythia8-noisr.py inputFiles="file:////tmp/${name}-file${nfil}.lhe" outputFile="/tmp/${name}${nfil}-pythia8-noisr.yoda" > ${name}${nfil}-pythia8-noisr.out
+cmsRun /afs/desy.de/user/h/hinzmann/CMSSW_7_6_5_patch1/src/shower_pythia8-noisr.py inputFiles="file:////tmp/${name}-file${nfil}.lhe" outputFile="/tmp/${name}${nfil}-pythia8-noisr.yoda" > ${name}${nfil}-pythia8-noisr.out
+
+#./pythia  &
+
+#rivet -a DYTOMUMU -a DYtest -a CMS_2012_I1107658 -a ATLAS_2012_I1204784 -a ATLAS_2011_I945498 -a ATLAS_2011_S9131140 -a ATLAS_2013_I1230812 ${outfile} > rivet-${name}.out
+
+# rivet -a CMS_2011_S9086218 -a CMS_2012_I1102908 -a CMS_2012_I1087342 -a CMS_2012_FSQ12020 -a CMS_2011_S9215166 -a CMS_2011_S9120041 -a CMS_2011_S9086218 -a CMS_2011_S8957746 -a CMS_2011_S8950903 -a ATLAS_2012_I1125575 -a ATLAS_2012_I1082936 -a ATLAS_2011_S8994773 -a ATLAS_2011_S8971293 -a ATLAS_2011_I919017 -a ATLAS_2010_S8817804 ${outfile} > rivet-${name}.out
+
+# rivet -a CMS_2011_S9086218 -a CMS_2014_SMPJ14015 -a SMP_14_001 -a CMS_powheg_weight ${outfile} > rivet-${name}.out
+#rivet -a CMS_2011_S9086218 -a CMS_2014_SMPJ14015 -a SMP_14_001 -a CMS_2015_FWD071 ${outfile} > rivet-${name}.out
+
+echo ' after the job finished '
+echo $pwd
+#rm ${outfile}
+#ls -rtl /tmp
+
+output=/afs/desy.de/user/h/hinzmann/CMSSW_7_6_5_patch1/src/
+
+mv ${name}${nfil}-pythia8-noisr.out  ${output}/
+mv ${name}${nfil}-pythia8-noisr.yoda ${output}/
+
+rm ${name}-file${nfil}.lhe
